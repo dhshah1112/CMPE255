@@ -1,0 +1,66 @@
+import pygame
+
+class Snake:
+    def __init__(self):
+        self.body = [(200, 200), (210, 200), (220, 200)]
+        self.direction = "RIGHT"
+
+    def change_direction(self, direction):
+        if direction == "UP" and self.direction != "DOWN":
+            self.direction = "UP"
+        elif direction == "DOWN" and self.direction != "UP":
+            self.direction = "DOWN"
+        elif direction == "LEFT" and self.direction != "RIGHT":
+            self.direction = "LEFT"
+        elif direction == "RIGHT" and self.direction != "LEFT":
+            self.direction = "RIGHT"
+
+    def move(self):
+        head = self.body[0]
+        x, y = head
+
+        if self.direction == "UP":
+            y -= 10
+        elif self.direction == "DOWN":
+            y += 10
+        elif self.direction == "LEFT":
+            x -= 10
+        elif self.direction == "RIGHT":
+            x += 10
+
+        self.body.insert(0, (x, y))
+        self.body.pop()
+
+    def grow(self):
+        tail = self.body[-1]
+        x, y = tail
+
+        if self.direction == "UP":
+            y += 10
+        elif self.direction == "DOWN":
+            y -= 10
+        elif self.direction == "LEFT":
+            x += 10
+        elif self.direction == "RIGHT":
+            x -= 10
+
+        self.body.append((x, y))
+
+    def collides_with_food(self, food):
+        return self.body[0] == food.position
+
+    def collides_with_self(self):
+        return self.body[0] in self.body[1:]
+
+    def collides_with_wall(self):
+        x, y = self.body[0]
+        return x < 0 or x >= 400 or y < 0 or y >= 400
+
+class Food:
+    def __init__(self):
+        self.position = (100, 100)
+
+    def generate_position(self):
+        x = pygame.time.get_ticks() % 400
+        y = pygame.time.get_ticks() % 400
+        self.position = (x, y)

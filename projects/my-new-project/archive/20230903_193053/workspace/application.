@@ -1,0 +1,10 @@
+import pygame
+from controller import GameController
+
+def main():
+    pygame.init()
+    game_controller = GameController()
+    game_controller.run()
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,18 @@
+import pygame
+
+class GameView:
+    def __init__(self):
+        self.window_width = 400
+        self.window_height = 400
+        self.window = pygame.display.set_mode((self.window_width, self.window_height))
+        pygame.display.set_caption("Snake Game")
+
+    def render(self, snake, food):
+        self.window.fill((0, 0, 0))
+
+        for segment in snake.body:
+            pygame.draw.rect(self.window, (0, 255, 0), (segment[0], segment[1], 10, 10))
+
+        pygame.draw.rect(self.window, (255, 0, 0), (food.position[0], food.position[1], 10, 10))
+
+        pygame.display.update()
